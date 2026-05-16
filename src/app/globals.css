@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
+/* ── Color tokens ──────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:          #FDF8F5;
+  --surface:     #FFFFFF;
+  --dark:        #1A1218;
+  --ink:         #2A1F24;
+  --ink-2:       #6B5A62;
+  --muted:       #A89BA0;
+  --accent:      #FF8FAB;
+  --accent-hov:  #FF6B8A;
+  --accent-soft: #FFE4EC;
+  --gold:        #D4A574;
+  --border:      #F0E4E8;
+  --border-dark: #2E2530;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg:          var(--bg);
+  --color-surface:     var(--surface);
+  --color-dark:        var(--dark);
+  --color-ink:         var(--ink);
+  --color-ink-2:       var(--ink-2);
+  --color-muted:       var(--muted);
+  --color-accent:      var(--accent);
+  --color-accent-hov:  var(--accent-hov);
+  --color-accent-soft: var(--accent-soft);
+  --color-gold:        var(--gold);
+  --color-border:      var(--border);
+  --font-heading: var(--font-syne), sans-serif;
+  --font-body:    var(--font-space), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-space), "Space Grotesk", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Sakura petal drift ─────────────────────────────────────────── */
+@keyframes petal-drift {
+  0%   { transform: translate(0, -30px) rotate(0deg);   opacity: 0; }
+  6%   { opacity: 0.30; }
+  94%  { opacity: 0.26; }
+  100% { transform: translate(-140px, 105vh) rotate(540deg); opacity: 0; }
+}
+
+.sakura-petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 8;
+  animation: petal-drift linear infinite;
+  will-change: transform, opacity;
+}
+
+/* ── Seigaiha wave pattern (subtle) ────────────────────────────── */
+.seigaiha-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='45'%3E%3Cellipse cx='30' cy='45' rx='30' ry='28' fill='none' stroke='%23FF8FAB' stroke-width='0.8' opacity='0.07'/%3E%3Cellipse cx='0' cy='45' rx='30' ry='28' fill='none' stroke='%23FF8FAB' stroke-width='0.8' opacity='0.07'/%3E%3Cellipse cx='60' cy='45' rx='30' ry='28' fill='none' stroke='%23FF8FAB' stroke-width='0.8' opacity='0.07'/%3E%3Cellipse cx='15' cy='17' rx='30' ry='28' fill='none' stroke='%23FF8FAB' stroke-width='0.8' opacity='0.07'/%3E%3Cellipse cx='45' cy='17' rx='30' ry='28' fill='none' stroke='%23FF8FAB' stroke-width='0.8' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* ── Selection ──────────────────────────────────────────────────── */
+::selection { background: var(--accent-soft); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .sakura-petal { display: none; }
 }
